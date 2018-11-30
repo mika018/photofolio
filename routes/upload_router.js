@@ -8,5 +8,8 @@ var path = require('path');
 router.get('/', function(req, res, next) {
   res.render('upload');
 });
+router.post('/upload_request', function(req, res, next) {
+  res.send('Upload received by server!');
+});
 
 module.exports = router;
