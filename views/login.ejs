@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Transmogrify</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+	<link rel="shortcut icon" type="image/x-icon" href="//static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="../javascripts/jstools/jquery-3.2.1.min.js"></script>
+	<script src="../javascripts/jstools/jquery-ui.min.js"></script>
+	<!-- Header script to reload js on embedded pages -->
+
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="css/util.css"> -->
+	<link rel="stylesheet" type="text/css" href="../stylesheets/login.css">
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+<!--===============================================================================================-->
+</head>
+
+
+<body class="login_body">
+	<div class="login_site login_init">
+            <div class="page_0 limiter login_container">
+                    <div class="login_wrapper p-t-90 p-b-30">
+                        <div class="login_form login_validate-form">
+                            <span id="login_title" class="login_form-title-1 p-b-40">
+                                login
+                            </span>
+
+                            
+                            <div  id = "email_container" class="login_wrap-input login_validate-input m-b-16" data-validate="Please enter email: ex@abc.xyz">
+                                <input class="login_input" type="text" name="email" placeholder="email" id= "login_email">
+                                <span class="login_focus-input"></span>
+                            </div>
+                        
+                            <div id = "password_container" class="login_wrap-input login_validate-input m-b-20" data-validate = "Please enter password">
+                                <input class="login_input" type="password" name="pass" placeholder="password" id= "login_pass">
+                                <span class="login_focus-input"></span>
+                            </div>
+
+                            <div id = "login_button_container" class="login_container-login-form-btn">
+                                <button class="login_login-form-btn" id = "login_btn">
+                                    login
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+	</div>
+<!--===============================================================================================-->
+	<script src="../javascripts/login.js"></script>		
+
+</body>
+</html>
