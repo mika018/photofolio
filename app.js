@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var home_router = require('./routes/home_router');
+var upload_router = require('./routes/upload_router');
 
 var app = express();
 
@@ -19,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home_router);
-
+app.use('/upload', upload_router);
 
 
 
