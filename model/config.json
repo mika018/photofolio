@@ -1,0 +1,9 @@
+{
+	"database_host": "18.202.85.55",
+	"database_port": 3306,
+	"database_user": "root",
+	"database_password": "password",
+	"s3_image_bucket": "photofolio-s3-bucket",
+	"ddb_image_table": "images",
+	"ddb_event_table": "events"
+}
