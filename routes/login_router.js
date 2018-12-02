@@ -12,5 +12,9 @@ router.post('/login_request', function(req, res, next) {
   Users.loginRequest(req, res);
   res.send("Received login request");
 });
+router.post('/album_id_request', function(req, res, next) {
+  Users.albumIdRequest(req, res);
+  res.send("Received album id request");
+});
 
 module.exports = router;

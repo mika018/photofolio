@@ -9,4 +9,8 @@ Users.loginRequest = function(req, res){
 
 };
 
+Users.albumIdRequest = function(req, res){
+    var album_id = req.body.album_id;
+
+};
 module.exports = Users;

@@ -166,7 +166,7 @@
     /* visibility: hidden; */
     background: rgb(33, 32, 32);
     border-radius: 0px;
-    height: 650px;
+    height: 750px;
     box-shadow: 0 2px 50px #000;
     /* -webkit-animation: bummer 2s,fadein 2s;
     animation: bummer 2s,fadein 2s;
@@ -201,27 +201,25 @@
     font-family: Oswald-Medium;
     font-size: 50px;
     color: #f2f2f2;
-    line-height: 2;
+    line-height: 1.75;
     text-align: center;
     
     display: block;
   }
+  .login_form-title-2 {
+    font-family: Oswald-Medium;
+    font-size: 30px;
+    color: #f2f2f2;
+    text-align: center;
+    margin-top: 40px;
+    display: block;
+  }
 
-  .login_btn-login-facebook i {
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  
-  .login_btn-login-facebook:hover {
-    color: #fff;
-    transition: all .5s;
-    background-color: #7a11f3;
-  }
   
   /*------------------------------------------------------------------
   [ Input ]*/
   
-  .login_wrap-input {
+  .login_wrap_input {
     width: 70%;
     background-color: #fff;
     height: 60px;
@@ -230,6 +228,16 @@
     margin:auto;
     margin-top: 20px;
     z-index: 1;
+  }
+  .album_id_wrap_input{
+    width: 70%;
+    background-color: #fff;
+    height: 60px;
+    border-radius: 11px;
+    position: relative;
+    margin:auto;
+    margin-top: 20px;
+    z-index: 1; 
   }
   @keyframes colorchange
   {
@@ -258,63 +266,28 @@
   .login_input.error  {
     animation: colorchange 5s infinite;
   }
-  
-
-  .login_focus-input {
-    display: block;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    border-radius: 31px;
-    background-color: #fff;
-    pointer-events: none;
-    outline: none;
-  }
-  .login_focus-input.error {
-    animation: colorchange 5s infinite;
-  }
-  .login_input:focus + .login_focus-input {
-    width: calc(100% + 20px);
-    outline: none;
-  }
-  
-  /*---------------------------------------------*/
-  .login_btn-show-pass {
+  .album_id_input {
+    border-style:none;
+    font-family: Oswald-Medium;
     font-size: 20px;
-    color: #aaaaaa;
-  
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    z-index: 200;
-    height: 100%;
-    top: 0;
-    right: 25px;
-    padding: 0 5px;
-    cursor: pointer;
-    -webkit-transition: background 0.4s;
-    -o-transition: background 0.4s;
-    -moz-transition: background 0.4s;
-    transition: background 0.4s;
+    color: #43383e;
+    line-height: 1.2;
+    outline: none;
+    position: relative;
+    display: block;
+    width: 80%;
+    height: inherit;
+    background: #fff;
+    border-radius: 11px;
+    padding: 0 35px 0 35px;
   }
-  
-  .login_btn-show-pass:hover {
-    color: #111111;
-  }
-  
-  .login_btn-show-pass.active {
-    color: #111111;
-  }
+
+
+
   
   /*------------------------------------------------------------------
   [ Button ]*/
-  .login_container-login-form-btn {
+  .login_container_btn {
     margin-top:20px;
     width: 100%;
     display: -webkit-box;
@@ -325,8 +298,18 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  
-  .login_login-form-btn {
+  .album_id_container_btn{
+    margin-top:20px;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .login_btn {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -350,31 +333,31 @@
     position: relative;
     z-index: 1;
   }
-  
-  .login_login-form-btn::before {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
+  .album_id_btn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    min-width: 160px;
+    margin-top: 20px;
+    height: 40px;
+    background-color: transparent;
     border-radius: 31px;
-    background-color: #333333;
-    pointer-events: none;
-    
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
-  }
   
+    font-family: Oswald-Regular;
+    font-size: 20px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+ 
+    position: relative;
+    z-index: 1;
+  }
+
   .login_login-form-btn:hover:before {
     background-color: #302e4d;
     width: calc(100% + 3px);
@@ -386,9 +369,7 @@
     visibility: hidden;
   }
   
-  .login_validate-input {
-    position: relative;
-  }
+
   
   .login_alert-validate::before {
     content: attr(data-validate);
@@ -456,6 +437,7 @@
   [ Responsive ]*/
   @media (max-width: 576px) {
     .login_wrapper {
+      margin-top: 50px;
       padding-top: 20px;
       box-shadow: 0px 3px 10px grey;
     }

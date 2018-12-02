@@ -2,13 +2,9 @@ $('#login_btn').click(function(){
     submitLogin();
 })
 
-$('.login_input').on('focus', function(){
-    if($(this).hasClass('error')){
-        $('.login_input').removeClass('error');
-        $('.login_focus-input').removeClass('error');
-    }
+$('#album_id_btn').click(function(){
+    submitAlbumID();
 })
-
 
 var submitLogin = function(){
     var email = $('#login_email').val();
@@ -25,12 +21,32 @@ var submitLogin = function(){
         },
         error: function(xhr, ajaxOptions, thrownError){
             console.log("ERROR!");
-            flashPasswordField();
+            // flashPasswordField();
             return false;
         }
     });
 }
 
+
+var submitAlbumID = function(){
+    var album_id = $('#album_id').val();
+    var form = {album_id:album_id}
+    // var data_str = JSON.stringify(form);
+    $.ajax({
+        url: '/login/album_id_request',
+        type: 'POST',
+        data: {album_id:album_id},
+        success: function(data){
+            console.log("OK!");
+            return true;
+        },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log("ERROR!");
+            // flashPasswordField();
+            return false;
+        }
+    });
+}
 
 var flashPasswordField = function(){
     $('.login_focus-input').addClass('error').delay(2000).queue(function(){
