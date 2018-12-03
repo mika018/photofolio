@@ -13,11 +13,14 @@ AWS.config.apiVersions = {
 var ddb = new AWS.DynamoDB()
 var s3 = new AWS.S3()
 
-module.exports = {
-	CONFIG: JSON.parse(fs.readFileSync('./config.json')),
+var Model = function(){
+
+}
+
+CONFIG = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 
 	// Returns a promise that returns all events
-	getEvents: function(){
+Model.getEvents = function(){
 		return ddb.scan({
 			TableName: CONFIG.ddb_event_table,
 			ProjectionExpression: "eventt"
@@ -26,10 +29,10 @@ module.exports = {
 				return event_record.eventt.S
 			})
 		})
-	},
+	}
 
 	// Returns promise that returns an image and its metadata
-	getImageByKey: function(image_meta){
+Model.getImageByKey = function(image_meta){
 
 		s3_uri = `${image_meta.eventt}/${image_meta.filename}`
 
@@ -66,10 +69,10 @@ module.exports = {
 				metadata: image_metadata
 			}
 		})
-	},
+	}
 
 	// Returns a promise that returns all images (and assosiated metadata) for a given event
-	getImageByEvent: function(eventt){
+Model.getImageByEvent = function(eventt){
 
 		return ddb.query({
 			TableName: CONFIG.ddb_image_table,
@@ -88,10 +91,10 @@ module.exports = {
 			getImagesP = image_records.map(image_record => getImageByKey(image_record.s3_uri))
 			return Promise.all(getImagesP)
 		})
-	},
+	}
 
 	// Returns a promise that uploads an image to s3 and create a DynamoDB metadata record
-	uploadImage: function(image_data, image_metadata){
+Model.uploadImage = function(image_data, image_metadata){
 
 		s3_uri = `${image_metadata.eventt}/${image_metadata.filename}`
 
@@ -114,10 +117,10 @@ module.exports = {
 
 		return uploadS3
 			.then(() => createDDBEntry)
-	},
+	}
 
 	// Returns a promise that updates an images DynamoDB metadata and (if necessary) moves the image in S3
-	updateImageMetaData: function(old_image_metadata, new_image_metadata){
+Model.updateImageMetaData = function(old_image_metadata, new_image_metadata){
 		old_s3_uri = `${old_old_image_metadata.eventt}/${old_old_image_metadata.filename}.${old_old_image_metadata.content_type}`
 		new_s3_uri = `${new_image_metadata.eventt}/${new_image_metadata.filename}.${new_image_metadata.content_type}`
 
@@ -144,7 +147,6 @@ module.exports = {
 		if (old_s3_uri !== new_s3_uri) return updateDDBRecord.then(() => moveObject)
 		else return updateDDBRecord
 	}
-}
 
 
 
@@ -153,3 +155,5 @@ module.exports = {
 
 
 
+
+module.exports = Model;
