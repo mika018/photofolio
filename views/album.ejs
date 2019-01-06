@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/home.css">
+    <script src="../javascripts/jstools/jquery-3.2.1.min.js"></script>
+    <script src="../javascripts/jstools/jquery-ui.min.js"></script>
+    <!-- <script src="../javascripts/audio_wave.js"></script> -->
+    <link rel="stylesheet" href="../stylesheets/tools/jquery-ui.min.css">
+    <!-- Header script to reload js on embedded pages -->
+    <script language="text/javascript">
+        function load_js()
+        {
+           var head= document.getElementsByTagName('head')[0];
+           var script= document.createElement('script');
+           script.type= 'text/javascript';
+           script.src= '../javascripts/home.js';
+           head.appendChild(script);
+        }
+        load_js();
+    </script>
+    <title>Transmogrify</title>
+</head>
+
+<body class = "home_body">
+
+     <div class="home_container">
+        <div class="home_wrapper">
+
+            <div id ="home_title_container">
+                <h1 class="home_title"><%= album%></h1>
+            </div>
+            <div class="brick-wall">
+                <figure class="brick" data-user-id="1" data-date="" data-file-id="">
+                    <div class="brick-img-container">
+                        <img class="brick-img" src="http://iris.theaureview.com/wp-content/uploads/2015/04/it-follows-film.png">
+                    </div>
+                </figure>
+                <figure class="brick" data-user-id="1" data-date="" data-file-id="">
+                    <div class="brick-img-container">
+                        <img class="brick-img" src="http://iris.theaureview.com/wp-content/uploads/2015/04/it-follows-film.png">
+                    </div>
+                </figure>
+                <figure class="brick" data-user-id="1" data-date="" data-file-id="">
+                        <div class="brick-img-container">
+                            <img class="brick-img" src="http://iris.theaureview.com/wp-content/uploads/2015/04/it-follows-film.png">
+                        </div>
+                </figure>
+                <figure class="brick" data-user-id="1" data-date="" data-file-id="">
+                        <div class="brick-img-container">
+                            <img class="brick-img" src="http://iris.theaureview.com/wp-content/uploads/2015/04/it-follows-film.png">
+                        </div>
+                </figure>
+                <figure class="brick" data-user-id="1" data-date="" data-file-id="">
+                        <div class="brick-img-container">
+                            <img class="brick-img" src="http://iris.theaureview.com/wp-content/uploads/2015/04/it-follows-film.png">
+                        </div>
+                </figure>
+
+            </div>
+        
+            <br class = 'clear'>
+        </div>
+    </div>
+   
+
+    <!-- <script src="../javascripts/home.js"></script> -->
+    <script>
+        // init_home();
+    </script>
+
+</body>
+</html>
