@@ -30,6 +30,23 @@ body {
     width: 100%;
 }
 
+#album_name_header{
+    text-align: center;
+    font: 24px 'Raleway', sans-serif;
+    font-weight: 700;
+ 
+    z-index: 1;
+}
+
+#album_name_input{
+    font: 16px 'Raleway', sans-serif;
+    font-weight: 700;
+    line-height: 2;
+    margin-top: 2.5%;
+    width: 45%;
+    height:10%;
+    z-index: 1;
+}
 .upload-btn {
     background-color: var(--clrBox);
     color: var(--clrRed);
@@ -38,7 +55,7 @@ body {
     font: 16px 'Raleway', sans-serif;
     font-weight: 700;
     line-height: 2;
-    margin-top: 30%;
+    margin-top: 10%;
     width: 45%;
     height:10%;
     z-index: 1;
@@ -55,6 +72,28 @@ body {
     border-color: var(--clrTitle);
 }
 
+.files-ready{
+    background-color: #009933;
+    color: #e6d9d9;
+    border: solid;
+    border-color: var(--clrText);
+    font: 16px 'Raleway', sans-serif;
+    font-weight: 700;
+    line-height: 2;
+    margin-top: 10%;
+    width: 45%;
+    height:10%;
+    z-index: 1;
+}
+.files-ready:active,
+.files-ready:hover,
+.files-ready:focus{
+    cursor:pointer;
+    background-color: var(#00f652);
+    color: var(--clrTitle);
+    border: solid;
+    border-color: var(--clrTitle);
+}
 
 
 

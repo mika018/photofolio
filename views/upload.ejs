@@ -20,16 +20,21 @@
                     <p class="image_title">Place Images</p>
                     <!-- <div class="progress">
                         <div class="progress-bar" role="progressbar"></div>
-                    </div> -->
+                    </div> -->  
+                    <div id = "album_name_header"> Album Name </div>
+                    <input id="album_name_input" type="text" name="album"><br>
                     <button class="btn btn-lg upload-btn" type="button">Upload File</button>
                 </div>
 	        </div>
 	    </div>
 
 	</div>
-
-	<input id="upload-input" type="file" name="uploads[]" multiple="multiple"></br>
-
+    <form action="upload_form" id="upload_form">
+      
+        <input id="upload-input" type="file" name="uploads" multiple="multiple" form="upload_form"></br>
+        <input type="submit">
+    </form>
+	
 	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="../javascripts/upload.js"></script>
 

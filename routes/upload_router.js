@@ -3,6 +3,8 @@ var router = express.Router();
 var path = require('path');
 var formidable = require('formidable');
 var model = require('../models/model');
+const fs = require('fs');
+
 // var parser = require('exif-parser').create(buffer);
 // var result = parser.parse();
 
@@ -13,10 +15,20 @@ router.get('/', function(req, res, next) {
 
 router.post('/upload_request',   function(req, res, next) {
   var form = new formidable.IncomingForm();
+
   form.parse(req, function (err, fields, files) {
-  
-    // console.log(files)
-    model.uploadImage(files, files)
+    console.log(files)
+    console.log(fields)
+    var oldpath = files['uploads[]']['path'];
+
+    var file = fs.readFileSync(oldpath);
+    var metadata = {
+      filename : files['uploads[]']['name'],
+      content_type : files['uploads[]']['type'],
+      eventt : fields['album_name']
+    }
+    console.log(metadata)
+    model.uploadImage(file, metadata)
     res.send('Upload received by server!');
   });
 });
