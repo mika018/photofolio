@@ -3,7 +3,7 @@
 	"database_port": 3306,
 	"database_user": "root",
 	"database_password": "password",
-	"s3_image_bucket": "photofolio-dev-s3-bucket",
+	"s3_image_bucket": "photofolio-dev-s3-bucket-2",
 	"ddb_image_table": "dev-images",
 	"ddb_event_table": "dev-events"
 }
