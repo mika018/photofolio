@@ -36,10 +36,10 @@ router.post('/upload_request',   function(req, res, next) {
     model.uploadImage(file, metadata)
           .then(data => console.log(data))
           .catch(err => console.log(err))
-          .then(() => model.updateImageMetaData(metadata, metadata))
-          .then(data => console.log(data))
-          .catch(err => console.log(err))
-    res.send('Upload received by server!');
+          .then(() => { 
+            res.send('Upload received by server!');
+          })
+    
   });
 });
 
