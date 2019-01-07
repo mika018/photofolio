@@ -22,13 +22,23 @@ router.post('/upload_request',   function(req, res, next) {
     var oldpath = files['uploads[]']['path'];
 
     var file = fs.readFileSync(oldpath);
+    var content_type =  files['uploads[]']['type'].substr(files['uploads[]']['type'].lastIndexOf('/') + 1);
     var metadata = {
       filename : files['uploads[]']['name'],
-      content_type : files['uploads[]']['type'],
+      content_type : content_type,
       eventt : fields['album_name']
     }
     console.log(metadata)
+
+
+
+    // model.uploadImage(file, metadata)
     model.uploadImage(file, metadata)
+          .then(data => console.log(data))
+          .catch(err => console.log(err))
+          .then(() => model.updateImageMetaData(metadata, metadata))
+          .then(data => console.log(data))
+          .catch(err => console.log(err))
     res.send('Upload received by server!');
   });
 });

@@ -17,7 +17,9 @@ var Model = function(){
 
 }
 
-Model.CONFIG = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
+Model.CONFIG = {	"s3_image_bucket": "photofolio-dev-s3-bucket-2",
+                    "ddb_image_table": "dev-images",
+                    "ddb_event_table": "dev-events"} //JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 
 // Returns a promise that returns all events
 // output = [event::<string>]
