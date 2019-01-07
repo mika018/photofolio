@@ -50,7 +50,7 @@ Model.getImageByKey = function(image_meta){
     fetchImageMetadataP = ddb.query({
         TableName: Model.CONFIG.ddb_image_table,
         KeyConditionExpression: 'eventt = :eventt AND s3_uri = :s3_uri',
-        ProjectionExpression: 's3_uri, filename, content_type, eventt',
+        ProjectionExpression: 's3_uri, filename, content_type, eventt, username',
         ExpressionAttributeValues: {
             ':s3_uri': { 'S': s3_uri },
             ':eventt': { 'S': image_meta.eventt }
@@ -61,7 +61,8 @@ Model.getImageByKey = function(image_meta){
                 s3_uri: image_record.s3_uri.S,
                 filename: image_record.filename.S,
                 content_type: image_record.content_type.S,
-                event: image_record.eventt.S
+                eventt: image_record.eventt.S,
+                username: image_record.username.S
             }
         })
     })
@@ -118,6 +119,7 @@ Model.uploadImage = function(image_data, image_metadata){
             eventt: { S: image_metadata.eventt },
             filename: { S: image_metadata.filename },
             content_type: { S: image_metadata.content_type },
+            user: { S: image_metadata.username }
         }
     }).promise()
 
@@ -188,7 +190,8 @@ Model.updateImageMetaData = function(old_image_metadata, new_image_metadata){
                 s3_uri: { "S": new_s3_uri },
                 eventt: { "S": new_image_metadata.eventt },
                 filename: { "S": new_image_metadata.filename },
-                content_type: { "S": new_image_metadata.content_type }
+                content_type: { "S": new_image_metadata.content_type },
+                username: { "S": new_image_metadata.username }
             }
         }).promise()
     })
