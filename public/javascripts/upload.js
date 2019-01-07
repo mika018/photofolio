@@ -1,7 +1,7 @@
 $('.upload-btn').on('click', function (){
     console.log("CLICK");
     var files = $('#upload-input').get(0).files;
-    postFilesTo(files, '/upload/upload_request');
+    postFilesTo(files, '', '/upload/upload_request');
 });
 
 function readURL(files) {
@@ -17,7 +17,7 @@ function readURL(files) {
     }
 }
 
-function postFilesTo(files, url) {
+function postFilesTo(files, album, url) {
     readURL(files);
     if (files.length > 0){
         // create a FormData object which will be sent as the data payload in the
@@ -29,6 +29,9 @@ function postFilesTo(files, url) {
 
             // add the files to formData object for the data payload
             formData.append('uploads[]', files[i], files[i].name);
+            if (album != '') {
+                formData.append('album', album);
+            }
             console.log(formData)
             $.ajax({
                 url: url,
@@ -59,3 +62,15 @@ $('#upload-input').on('change', function(){
         $('.files-ready').text('Store Album');
     }
 })
+  
+// $('#upload-input').on('change', function(){
+//     var files = $(this).get(0).files;
+//     postFilesTo(files, 'uploads[]', '/upload/upload_request');
+// });
+
+$('#upload-input-find-me').on('change', function(){
+    var files = $(this).get(0).files;
+    var album = window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
+    postFilesTo(files, decodeURIComponent(album), '/album/find_me');
+});
+  
