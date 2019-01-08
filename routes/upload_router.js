@@ -31,7 +31,6 @@ router.post('/upload_request',   function(req, res, next) {
     console.log(metadata)
 
 
-
     // model.uploadImage(file, metadata)
     model.uploadImage(file, metadata)
           .then(data => console.log(data))

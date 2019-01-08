@@ -80,137 +80,56 @@ h1.home_title{
 }
 
 
-.brick-wall {
+.folder_grid {
   position:relative;
-    display: flex;
-    flex-flow: row wrap;
-    counter-reset: brick;
-    /* z-index: 10; */
+  display: flex;
+  flex-flow: row wrap;
 }
 
-.brick {
-    box-shadow: 2px 3px 50px #233237;
-    border-radius: 5px;
-    position: relative;
+
+
+.folder {
+  width: 200px;
+  height: 140px;
+  margin-left: 50px;
+  position: relative;
+  text-align: center;
 }
 
-.brick:after {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    z-index: 999;
-    transform: translate(-50%, -50%);
-    transition: font-size .25s, opacity .25s ease-in-out;
-    font-weight: 700;
-    opacity: .5;
-    font-size: 1.25em;
-  }
-
-.brick {
-    flex: auto;
-    height: 200px;
-    max-width: 500px;
-    perspective: 1000;
-    margin: 18px;
-    margin-bottom:40px;
-    border: 2px grey;
-    -webkit-perspective: 1000;
-}
-.brick:hover{
-    cursor:pointer;
-}
-
-@media only screen and (min-width: 1024px) {
-  /* Horizontal bricks on desktop-sized screen */
-  .brick:nth-child(4n+1) {
-    width: 250px;
-  }
-  .brick:nth-child(4n+2) {
-    width: 325px;
-  }
-  .brick:nth-child(4n+3) {
-    width: 180px;
-  }
-  .brick:nth-child(4n+4) {
-    width: 380px;
-  }
-
-}
-
-@media only screen and (max-width: 1023px) and (min-width: 768px) {
-  /* Horizontal bricks on tabled-sized screen */
-  .brick:nth-child(4n+1) {
-    width: 200px;
-  }
-  .brick:nth-child(4n+2) {
-    width: 250px;
-  }
-  .brick:nth-child(4n+3) {
-    width: 120px;
-  }
-  .brick:nth-child(4n+4) {
-    width: 280px;
-  }
-
-}
-
-.brick-img-container{
+.folder:after {
+  content: " ";
+  width: 200px;
+  height: 140px;
+  border-radius: 0 5px 5px 5px;
+  box-shadow: 2px 2px 1px 1px #CCCCCC;
+  display: block;
+  background-color: #708090;
   position: absolute;
-  height: 100%;
-  width: 100%;
-}
-@-webkit-keyframes AnimationName {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-@keyframes AnimationName { 
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-@keyframes pulse_animation {
-  0% { transform: scale(1); }
-  30% { transform: scale(1); }
-  40% { transform: scale(1.02); }
-  50% { transform: scale(1); }
-  60% { transform: scale(1); }
-  70% { transform: scale(1.01); }
-  80% { transform: scale(1); }
-  100% { transform: scale(1); }
-}
-.brick-img-container.animate_gradient{
-  background: linear-gradient(22deg, #16c89a, #ffc404, #c85d16, #c8163c, #09e490, #e8e0d9);
-  background-size: 3000% 3000%;
-  background-position: bottom;
-  -webkit-animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
-  -moz-animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
-  animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
-  transform-origin:50% 50%;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-.brick-img-container.animate_gradient > .brick-img{
-  transition: all 1s;
-  opacity:0.90;
+  /* top: 15px; */
+  /* left: 50px;     */
 }
 
-
-.brick-img {
-  object-fit: cover;
-  width: 100%;
-  height: 102%;   
-  opacity: 1;
+.folder:before {
+  content: " ";
+  width: 100px;
+  height: 20px;
+  border-radius: 5px 15px 0 0;
+  display: block;
+  background-color: #708090;
+  position: absolute;
+  top: 5px;
+  /* left: 50px; */
 }
 
-.brick-audio{
-  position:absolute;
-  width:100%;
-  height:40%;
-  bottom:40%;
+.folder:hover{
+  cursor: pointer;
+}
+
+.folder_name{
+  z-index: 1000;
+  top:40%;
+  position: relative;
+  font: 1em/1.5 'Open Sans', sans-serif;
+  color: var(--clrTitle);
+  font-weight: 800;
 }

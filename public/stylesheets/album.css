@@ -1,0 +1,250 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+:root {
+  --clrRed:   #CD412B; /* Red Highlights*/
+  --clrBack:  #202020; /* Black Background */
+  --clrBox:   #303232; /* Dark Box */
+  --clrTitle: #F6EAE1; /* Whitish Title */
+  --clrText:  #948C87; /* Duller Text*/
+  --clrOut:   #505050; /* Faint Outline*/
+  /* --colour6: #BEEAF8; /* Lighter Blue */ 
+}
+html {
+    overflow-y: scroll;
+}
+#home_title_container{
+  /* height: 400px; */
+  /* width: 100vw; */
+
+  /* position: relative; */
+  /* align-content: center; */
+  /* text-align: center; */
+}
+.home_title{
+  /* position: relative; */
+  /* margin: 0 auto; */
+  /* text-align: center; */
+}
+body{
+  background-color: #303232;
+}
+h1.home_title{ 
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  text-align: center;
+  font: 4em/1.5 'Open Sans', sans-serif;
+  color: var(--clrText);
+  font-weight: 800;
+  padding-top: 50px;
+  line-height: 1;
+}
+
+.home_title span {
+	color: var(--clrTitle);
+	font-weight: 300;
+	/* margin-left: -7px; */
+}
+
+.home_body h1 {
+
+}
+
+.home_container{
+    padding-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #202020;
+    box-shadow: 0 0 20px 8px #303232 inset;
+    width: 80%;
+    min-width:1540px;
+    align-content: center;
+}
+.clear
+{
+    clear: both;
+}
+/* Wrapper @ Wrapper around bricks container */
+.home_wrapper {
+    /* padding-left: 17.5%;
+    padding-right: 17.5%; */
+    width: 100%;
+}
+
+.home_body img {
+    top:0;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+
+.brick-wall {
+  position:relative;
+    display: flex;
+    flex-flow: row wrap;
+    counter-reset: brick;
+    /* z-index: 10; */
+}
+
+.brick {
+    box-shadow: 2px 3px 50px #233237;
+    border-radius: 5px;
+    position: relative;
+}
+
+.brick:after {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    transition: font-size .25s, opacity .25s ease-in-out;
+    font-weight: 700;
+    opacity: .5;
+    font-size: 1.25em;
+  }
+
+.brick {
+    flex: auto;
+    height: 200px;
+    max-width: 500px;
+    perspective: 1000;
+    margin: 18px;
+    margin-bottom:40px;
+    border: 2px grey;
+    -webkit-perspective: 1000;
+}
+.brick:hover{
+    cursor:pointer;
+}
+
+@media only screen and (min-width: 1024px) {
+  /* Horizontal bricks on desktop-sized screen */
+  .brick:nth-child(4n+1) {
+    width: 250px;
+  }
+  .brick:nth-child(4n+2) {
+    width: 325px;
+  }
+  .brick:nth-child(4n+3) {
+    width: 180px;
+  }
+  .brick:nth-child(4n+4) {
+    width: 380px;
+  }
+
+}
+
+@media only screen and (max-width: 1023px) and (min-width: 768px) {
+  /* Horizontal bricks on tabled-sized screen */
+  .brick:nth-child(4n+1) {
+    width: 200px;
+  }
+  .brick:nth-child(4n+2) {
+    width: 250px;
+  }
+  .brick:nth-child(4n+3) {
+    width: 120px;
+  }
+  .brick:nth-child(4n+4) {
+    width: 280px;
+  }
+
+}
+
+.brick-img-container{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes pulse_animation {
+  0% { transform: scale(1); }
+  30% { transform: scale(1); }
+  40% { transform: scale(1.02); }
+  50% { transform: scale(1); }
+  60% { transform: scale(1); }
+  70% { transform: scale(1.01); }
+  80% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+.brick-img-container.animate_gradient{
+  background: linear-gradient(22deg, #16c89a, #ffc404, #c85d16, #c8163c, #09e490, #e8e0d9);
+  background-size: 3000% 3000%;
+  background-position: bottom;
+  -webkit-animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
+  -moz-animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
+  animation: pulse_animation  0.2s ease infinite, AnimationName 4s ease infinite;
+  transform-origin:50% 50%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.brick-img-container.animate_gradient > .brick-img{
+  transition: all 1s;
+  opacity:0.90;
+}
+
+
+.brick-img {
+  object-fit: cover;
+  width: 100%;
+  height: 102%;   
+  opacity: 1;
+}
+
+.brick-audio{
+  position:absolute;
+  width:100%;
+  height:40%;
+  bottom:40%;
+}
+
+
+.folder {
+  width: 100px;
+  height: 50px;
+  padding-top: 50px;
+  position: relative;
+  text-align: center;
+}
+
+.folder:after {
+  content: " ";
+  width: 50px;
+  height: 35px;
+  border-radius: 0 5px 5px 5px;
+  box-shadow: 1px 1px 0 1px #CCCCCC;
+  display: block;
+  background-color: #708090;
+  position: absolute;
+  top: 15px;
+  left: 25px;    
+}
+
+.folder:before {
+  content: " ";
+  width: 25px;
+  height: 5px;
+  border-radius: 5px 15px 0 0;
+  display: block;
+  background-color: #708090;
+  position: absolute;
+  top: 10px;
+  left: 25px;
+}
