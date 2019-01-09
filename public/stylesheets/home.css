@@ -94,6 +94,7 @@ h1.home_title{
   margin-left: 50px;
   position: relative;
   text-align: center;
+  text-decoration: none;
 }
 
 .folder:after {
