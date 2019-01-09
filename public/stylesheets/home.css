@@ -133,3 +133,10 @@ h1.home_title{
   color: var(--clrTitle);
   font-weight: 800;
 }
+
+#test_canvas{
+  z-index: 1000;
+  /* width: 400px;
+  height: 200px; */
+  position: relative;
+}
