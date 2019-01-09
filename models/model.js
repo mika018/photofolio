@@ -78,7 +78,6 @@ Model.getImageByKey = function(image_meta){
 // Returns a promise that returns all images (and assosiated metadata) for a given event
 // output = [image]
 Model.getImagesByEvent = function(eventt){
-
     return ddb.query({
         TableName: Model.CONFIG.ddb_image_table,
         KeyConditionExpression: 'eventt = :eventt',

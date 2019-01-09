@@ -28,10 +28,14 @@ var loadAlbum = function(){
             // images = data
 
             // document.getElementById('test_canvas').src = 'data:image/jpg;base64,' + images[0].data;
+            for (image of data){
+                image_buffer = image.data;
+                $('#album_grid').append(loadPhoto(image_buffer))
+            }
             console.log("SUCCESS!");
         },
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log("ERROR!");
+        error: function(error){
+            console.log(error);
             // flashPasswordField();
             return false;
         }
@@ -45,3 +49,11 @@ function getUrlParameter(name) {
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
+
+var loadPhoto = function(image_buffer){
+    return   ( '<li>'
+                + '<a class="image" href="#item01">' 
+                + '<img src="data:image/jpg;base64,' + image_buffer + '" alt="">'
+                + '</a>'
+                + '</li>')
+}
