@@ -17,9 +17,11 @@ var Model = function(){
 
 }
 
-Model.CONFIG = {	"s3_image_bucket": "photofolio-dev-s3-bucket-2",
-                    "ddb_image_table": "dev-images",
-                    "ddb_event_table": "dev-events"} //JSON.parse(fs.readFileSync(__dirname + '/config.json'));
+Model.CONFIG = {	
+    "s3_image_bucket": "photofolio-dev-s3-bucket-2",
+    "ddb_image_table": "dev-images",
+    "ddb_event_table": "dev-events"
+} //JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 
 // Returns a promise that returns all events
 // output = [event::<string>]
@@ -32,6 +34,16 @@ Model.getEvents = function(){
             return event_record.eventt.S
         })
     })
+}
+
+Model.addEvent = function(eventt) {
+   return ddb.putItem({
+        TableName: Model.CONFIG.ddb_event_table,
+        ReturnConsumedCapacity: 'TOTAL',
+        Item: {
+            eventt: { S: eventt + "/" }
+        }
+    }).promise()
 }
 
 // Returns promise that returns an image and its metadata
@@ -100,7 +112,6 @@ Model.getImagesByEvent = function(eventt){
 // Returns a promise that uploads an image to s3 and create a DynamoDB metadata record
 // output = undefined
 Model.uploadImage = function(image_data, image_metadata){
-
     s3_uri = `${image_metadata.eventt}/${image_metadata.filename}`
 
     uploadS3 = s3.putObject({
