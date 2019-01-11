@@ -40,7 +40,9 @@ var loadAlbum = function(){
             return false;
         }
     });
-
+    $('body').css('display', 'none');
+    $('body').fadeIn(2000);
+    
 }
 
 // Allows user to upload image of his/her face to filter the gallery
@@ -50,6 +52,11 @@ var find_me = function(file){
     var formData = new FormData();
     formData.append('uploads[]', file, file.name);
     formData.append('album_name', album);
+    var album_grid = document.getElementById("album_grid");
+
+    while (album_grid.lastChild) {
+        album_grid.removeChild(album_grid.lastChild);
+    }
     $.ajax({
         url: '/gallery/find_me',
         type: 'POST',
@@ -58,10 +65,7 @@ var find_me = function(file){
         contentType: false,
         success: function(data){
             console.log('finding successful!\n');
-            var album_grid = document.getElementById("album_grid");
-            while (album_grid.lastChild) {
-                album_grid.removeChild(album_grid.lastChild);
-            }
+
             for (image of data){
                 image_buffer = image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))

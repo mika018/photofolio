@@ -69,7 +69,6 @@ router.post('/find_me', function(req, res, next) {
     // console.log(`Album name: ${album_name}`)
     // First upload the provided image to the faces directory inside s3 bucket
     model.uploadImage(file, face_metadata).then(() => {
-      console.log("Uploaded it successfully!!!!!")
       // Then pull all the images from the viewed event/album
       model.getImagesByEvent(album_name)
            .then(images => {
@@ -81,16 +80,21 @@ router.post('/find_me', function(req, res, next) {
                     console.log(`Rekognition params: ${JSON.stringify(params)}`)
                     rekognition.compareFaces(params, function(err, data) {
                       if (err) {
-                        itemsProcessed++;
+                        itemsProcessed++; 
                         if (itemsProcessed === images.length){
                           res.send(face_matching_images);
                         }
                       } else if (data.FaceMatches.length > 0) {
-                        face_matching_images.push({metadata: image.metadata, data: image.data.toString('base64')})
-                        itemsProcessed++;
-                        if (itemsProcessed === images.length){
-                          res.send(face_matching_images);
-                        }
+                          face_matching_images.push({metadata: image.metadata, data: image.data.toString('base64')})
+                          itemsProcessed++;  
+                          if (itemsProcessed === images.length){
+                            res.send(face_matching_images);
+                          }
+                      } else {
+                          itemsProcessed++;
+                          if (itemsProcessed === images.length){
+                            res.send(face_matching_images);
+                          }
                       }
                     })
                   })
