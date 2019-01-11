@@ -17,6 +17,8 @@ var Model = function(){
 
 }
 
+Model.AWS = AWS
+
 Model.CONFIG = {	
     "s3_image_bucket": "photofolio-dev-s3-bucket-2",
     "ddb_image_table": "dev-images",

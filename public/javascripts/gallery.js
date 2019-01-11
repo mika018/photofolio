@@ -43,6 +43,34 @@ var loadAlbum = function(){
 
 }
 
+// Allows user to upload image of his/her face to filter the gallery
+var find_me = function(file){
+    console.log(JSON.stringify(file))
+    var album = getUrlParameter('album_name');
+    var formData = new FormData();
+    formData.append('uploads[]', file, file.name);
+    formData.append('album_name', album);
+    $.ajax({
+        url: '/gallery/find_me',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+            console.log('upload successful!\n' + data);
+        },
+        error: function(error){
+            console.log(error);
+            return false;
+        }
+    });
+}
+
+$('#upload-input').on('change', function(){
+    var file = $(this).get(0).files[0];
+    find_me(file);
+});
+
 function getUrlParameter(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
