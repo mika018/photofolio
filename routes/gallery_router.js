@@ -79,7 +79,7 @@ router.post('/find_me', function(req, res, next) {
         images.forEach((image) => {
           const params = rekognitionParams(image.metadata[0].s3_uri, `faces/${face_metadata.filename}`)
           // console.log(`Rekognition params: ${JSON.stringify(params)}`)
-          return rekognition.compareFaces(params, function(err, data) {
+          rekognition.compareFaces(params, function(err, data) {
             if (err) {
               console.log(err, err.stack);
             } 
