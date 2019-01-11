@@ -7,7 +7,6 @@ var logger = require('morgan');
 var home_router = require('./routes/home_router');
 var upload_router = require('./routes/upload_router');
 var login_router = require('./routes/login_router');
-var album_router = require('./routes/album_router');
 var gallery_router = require('./routes/gallery_router');
 
 var app = express();
@@ -26,7 +25,6 @@ app.use('/', home_router);
 app.use('/gallery', gallery_router);
 app.use('/upload', upload_router);
 app.use('/login', login_router);
-app.use('/album', album_router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

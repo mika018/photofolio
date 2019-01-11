@@ -56,7 +56,6 @@ router.post('/open_album', function(req, res, next) {
 });
 
 router.post('/find_me', function(req, res, next) {
-  var face_matching_images = [];
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     var file_path = files['uploads[]']['path'];
@@ -66,38 +65,32 @@ router.post('/find_me', function(req, res, next) {
       content_type : files['uploads[]']['type'],
       eventt : 'faces'
     }
-    console.log(`Trying to upload ${JSON.stringify(face_metadata)}`)
     var album_name = fields['album_name'];
-    console.log(`Album name: ${album_name}`)
+    // console.log(`Album name: ${album_name}`)
     // First upload the provided image to the faces directory inside s3 bucket
     model.uploadImage(file, face_metadata).then(() => {
       console.log("Uploaded it successfully!!!!!")
       // Then pull all the images from the viewed event/album
-      // model.getImagesByEvent('little_litter').then(images => {
       model.getImagesByEvent(album_name).then(images => {
         // Now run rekognition api against all those photos
+        var face_matching_images = [];
         images.forEach((image) => {
           const params = rekognitionParams(image.metadata[0].s3_uri, `faces/${face_metadata.filename}`)
           // console.log(`Rekognition params: ${JSON.stringify(params)}`)
           rekognition.compareFaces(params, function(err, data) {
             if (err) {
-              console.log(err, err.stack);
-            } 
-            // else {
-            //   console.log(data)
-            // } 
-            else if (data.FaceMatches.length > 0) {
+              console.log(err);
+            } else if (data.FaceMatches.length > 0) {
               face_matching_images.push({metadata: image.metadata, data: image.data.toString('base64')})
             }
           })
         })
+        console.log(`Faces1: ${JSON.stringify(face_matching_images)}`)
+        return face_matching_images;
       })
-      .then(() => {
-        // Rerender the page with matching images
-          console.log("FOUND sFACES!")
-          face_matching_images.forEach((face) => console.log(JSON.stringify(face.metadata)))
-          // res.send(face_matching_images);
-        // res.render('album', album_name, face_matching_images);
+      .then((faces) => {
+        console.log(`Faces2: ${JSON.stringify(faces)}`)
+        // res.send(face_matching_images);
       })
     })
     .catch(err => console.log(err))
