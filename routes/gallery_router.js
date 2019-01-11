@@ -71,27 +71,30 @@ router.post('/find_me', function(req, res, next) {
     model.uploadImage(file, face_metadata).then(() => {
       console.log("Uploaded it successfully!!!!!")
       // Then pull all the images from the viewed event/album
-      model.getImagesByEvent(album_name).then(images => {
-        // Now run rekognition api against all those photos
-        var face_matching_images = [];
-        images.forEach((image) => {
-          const params = rekognitionParams(image.metadata[0].s3_uri, `faces/${face_metadata.filename}`)
-          // console.log(`Rekognition params: ${JSON.stringify(params)}`)
-          rekognition.compareFaces(params, function(err, data) {
-            if (err) {
-              console.log(err);
-            } else if (data.FaceMatches.length > 0) {
-              face_matching_images.push({metadata: image.metadata, data: image.data.toString('base64')})
-            }
-          })
-        })
-        console.log(`Faces1: ${JSON.stringify(face_matching_images)}`)
-        return face_matching_images;
-      })
-      .then((faces) => {
-        console.log(`Faces2: ${JSON.stringify(faces)}`)
-        // res.send(face_matching_images);
-      })
+      model.getImagesByEvent(album_name)
+           .then(images => {
+                  // Now run rekognition api against all those photos
+                  var face_matching_images = [];
+                  var itemsProcessed = 1;
+                  images.forEach((image) => {
+                    const params = rekognitionParams(image.metadata[0].s3_uri, `faces/${face_metadata.filename}`)
+                    console.log(`Rekognition params: ${JSON.stringify(params)}`)
+                    rekognition.compareFaces(params, function(err, data) {
+                      if (err) {
+                        itemsProcessed++;
+                        if (itemsProcessed === images.length){
+                          res.send(face_matching_images);
+                        }
+                      } else if (data.FaceMatches.length > 0) {
+                        face_matching_images.push({metadata: image.metadata, data: image.data.toString('base64')})
+                        itemsProcessed++;
+                        if (itemsProcessed === images.length){
+                          res.send(face_matching_images);
+                        }
+                      }
+                    })
+                  })
+              })
     })
     .catch(err => console.log(err))
   })

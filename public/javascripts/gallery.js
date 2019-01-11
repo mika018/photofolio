@@ -57,7 +57,15 @@ var find_me = function(file){
         processData: false,
         contentType: false,
         success: function(data){
-            console.log('upload successful!\n' + data);
+            console.log('finding successful!\n');
+            var album_grid = document.getElementById("album_grid");
+            while (album_grid.lastChild) {
+                album_grid.removeChild(album_grid.lastChild);
+            }
+            for (image of data){
+                image_buffer = image.data;
+                $('#album_grid').append(loadPhoto(image_buffer))
+            }
         },
         error: function(error){
             console.log(error);
