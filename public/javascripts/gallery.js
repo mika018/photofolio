@@ -1,4 +1,11 @@
 // portfolio
+
+$('.tab-link').on('click', function(){
+    var tab_name = $(this).data('tab');
+    var tab_url = $($(this).children('.tab-url')[0]).attr('href');
+    window.location.href = tab_url;
+})
+
 $('.gallery ul li a').click(function() {
     var itemID = $(this).attr('href');
     $('.gallery ul').addClass('item_open');
