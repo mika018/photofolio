@@ -1,3 +1,11 @@
+
+$('.tab-link').on('click', function(){
+    var tab_name = $(this).data('tab');
+    var tab_url = $($(this).children('.tab-url')[0]).attr('href');
+    window.location.href = tab_url;
+})
+
+
 $('.upload-btn').on('click', function (){
     console.log("CLICK");
     var files = $('#upload-input').get(0).files;

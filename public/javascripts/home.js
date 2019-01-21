@@ -1,4 +1,9 @@
 
+$('.tab-link').on('click', function(){
+    var tab_name = $(this).data('tab');
+    var tab_url = $($(this).children('.tab-url')[0]).attr('href');
+    window.location.href = tab_url;
+})
 
 // $('.folder').on('click', function(){
 //     var folder_name = $(this).children('.folder_name').data('album-name');

@@ -26,8 +26,59 @@ html {
   /* margin: 0 auto; */
   /* text-align: center; */
 }
+
+header {
+  background-color: #84b4b1;
+  color: #fff;
+  text-align: center;
+  padding: 30px 0 120px;
+}
+header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 65px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  line-height: 0.8;
+  padding-top: 50px;
+  font-family: "Montserrat", sans-serif;
+}
+header h1 span {
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  font-size: 25px;
+  line-height: 1;
+}
+header p {
+  padding-top: 30px;
+}
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 50;
+  font-family: "Montserrat", sans-serif;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+.tab-link-url{
+  position:relative;
+  width:100%;
+  height:100%;
+}
 body{
-  background-color: #303232;
+ 
 }
 h1.home_title{ 
   -webkit-user-select: none; /* Safari */        
@@ -56,8 +107,7 @@ h1.home_title{
     padding-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    background: #202020;
-    box-shadow: 0 0 20px 8px #303232 inset;
+
     width: 80%;
     min-width:1540px;
     align-content: center;
@@ -91,6 +141,7 @@ h1.home_title{
 .folder {
   width: 200px;
   height: 140px;
+  
   margin-left: 50px;
   position: relative;
   text-align: center;
@@ -102,9 +153,10 @@ h1.home_title{
   width: 200px;
   height: 140px;
   border-radius: 0 5px 5px 5px;
-  box-shadow: 2px 2px 1px 1px #CCCCCC;
+  /* box-shadow: 2px 2px 1px 1px #CCCCCC; */
   display: block;
   background-color: #708090;
+  box-shadow: 2px 2px 1px 1px rgb(61, 59, 59);
   position: absolute;
   /* top: 15px; */
   /* left: 50px;     */
@@ -116,6 +168,7 @@ h1.home_title{
   height: 20px;
   border-radius: 5px 15px 0 0;
   display: block;
+  box-shadow: 2px 2px 1px 1px rgb(37, 33, 33);
   background-color: #708090;
   position: absolute;
   top: 5px;

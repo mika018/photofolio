@@ -12,15 +12,19 @@
  
     <title>Transmogrify</title>
 </head>
-
+<header>
+     <ul class="tabs">
+            <li class="tab-link current " data-tab="home-tab">Home<a class="tab-url" href="/"></a></li>
+            <li class="tab-link " data-tab="upload-tab">Upload<a class="tab-url" href="/upload"></a></li>
+    </ul>
+	<h1>Photofolio</h1>
+</header>
 <body class = "home_body">
  
      <div class="home_container">
         <div class="home_wrapper">
 
-            <div id ="home_title_container">
-                <h1 class="home_title"> Photo<span>folio </span></h1>
-            </div>
+    
             <div class="folder_grid">
                 <% for(var i=0; i < (albums_names).length; i++) { %>
                  
