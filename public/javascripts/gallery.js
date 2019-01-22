@@ -23,7 +23,9 @@ $(".gallery ul li a").click(function() {
     }, 400);
 });
 
-
+$('#find-me-btn').click(function(){
+    $('#upload-input').click();
+})
 // LOADS IMAGES
 var loadAlbum = function(){
     var folder_name = getUrlParameter('album_name');
@@ -38,6 +40,55 @@ var loadAlbum = function(){
             for (image of data){
                 image_buffer = image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))
+                $('.album_photo').on('click', function() {
+                    $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
+                    $('#enlargeImageModal').modal('show');
+                });
+                $('#modal-image').imgAreaSelect({
+                    handles: true,
+                    onSelectEnd: function(img, selection){
+                        $('.find-drag-btn').on('click', function(){
+                            console.log(selection)
+                            var y = getImagePortion(img, selection.x2 - selection.x1, selection.y2 - selection.y1, selection.x1, selection.y1, 2);
+                            var blob = dataURItoBlob(y);
+                            var formData = new FormData(document.forms[0]);
+                            var album = getUrlParameter('album_name');
+                            formData.append('album_name', album);
+                            formData.append("uploads[]", blob, "region.jpg");
+                            var album_grid = document.getElementById("album_grid");
+    
+                            while (album_grid.lastChild) {
+                                album_grid.removeChild(album_grid.lastChild);
+                            }
+                            $('#enlargeImageModal').modal('hide');
+                            $('.imgareaselect-outer').css('opacity', '0.0');
+                            $('.lds-roller-container').css('visibility', 'visible');
+                            $.ajax({
+                                url: '/gallery/find_me',
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function(data){
+                                    console.log(data);
+                                    for (image of data){
+                                        image_buffer = image.data;
+                                        $('#album_grid').append(loadPhoto(image_buffer))
+                                        $('.album_photo').on('click', function() {
+                                            $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
+                                            $('#enlargeImageModal').modal('show');
+                                        });
+                                    }
+                                    $('.lds-roller-container').css('visibility', 'hidden');
+                                },
+                                error: function(error){
+                                    console.log(error);
+                                    return false;
+                                }
+                            });
+                        })
+                    }
+                });
             }
             console.log("SUCCESS!");
         },
@@ -49,7 +100,27 @@ var loadAlbum = function(){
     });
     $('body').css('display', 'none');
     $('body').fadeIn(2000);
+    $('header').find('h2').text(folder_name);
     
+}
+
+var getImagePortion = function(imgObj, newWidth, newHeight, startX, startY, ratio){
+    /* the parameters: - the image element - the new width - the new height - the x point we start taking pixels - the y point we start taking pixels - the ratio */
+    //set up canvas for thumbnail
+    var tnCanvas = document.createElement('canvas');
+    var tnCanvasContext = tnCanvas.getContext('2d');
+    tnCanvas.width = newWidth; tnCanvas.height = newHeight;
+    
+    /* use the sourceCanvas to duplicate the entire image. This step was crucial for iOS4 and under devices. Follow the link at the end of this post to see what happens when you don’t do this */
+    var bufferCanvas = document.createElement('canvas');
+    var bufferContext = bufferCanvas.getContext('2d');
+    bufferCanvas.width = imgObj.width;
+    bufferCanvas.height = imgObj.height;
+    bufferContext.drawImage(imgObj, 0, 0);
+    
+    /* now we use the drawImage method to take the pixels from our bufferCanvas and draw them into our thumbnail canvas */
+    tnCanvasContext.drawImage(bufferCanvas, startX,startY,newWidth * ratio, newHeight * ratio,0,0,newWidth,newHeight);
+    return tnCanvas.toDataURL();
 }
 
 // Allows user to upload image of his/her face to filter the gallery
@@ -64,6 +135,7 @@ var find_me = function(file){
     while (album_grid.lastChild) {
         album_grid.removeChild(album_grid.lastChild);
     }
+    $('.lds-roller-container').css('visibility', 'visible');
     $.ajax({
         url: '/gallery/find_me',
         type: 'POST',
@@ -76,7 +148,12 @@ var find_me = function(file){
             for (image of data){
                 image_buffer = image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))
+                $('.album_photo').on('click', function() {
+                    $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
+                    $('#enlargeImageModal').modal('show');
+                });
             }
+            $('.lds-roller-container').css('visibility', 'hidden');
         },
         error: function(error){
             console.log(error);
@@ -97,10 +174,30 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
+
 var loadPhoto = function(image_buffer){
     return   ( '<li>'
-                + '<a class="image" href="#item01">' 
-                + '<img src="data:image/jpg;base64,' + image_buffer + '" alt="">'
+                + '<a class="image" >' 
+                + '<img class="album_photo" src="data:image/jpg;base64,' + image_buffer + '" alt="">'
                 + '</a>'
                 + '</li>')
 }
