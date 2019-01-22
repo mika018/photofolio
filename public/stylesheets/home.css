@@ -164,7 +164,7 @@ h1.home_title{
   border-radius: 0 5px 5px 5px;
   /* box-shadow: 2px 2px 1px 1px #CCCCCC; */
   display: block;
-  background-color: #708090;
+  background-color: #75a9dd;
   box-shadow: 2px 2px 1px 1px rgb(61, 59, 59);
   position: absolute;
   /* top: 15px; */
@@ -178,7 +178,7 @@ h1.home_title{
   border-radius: 5px 15px 0 0;
   display: block;
   box-shadow: 2px 2px 1px 1px rgb(37, 33, 33);
-  background-color: #708090;
+  background-color: #71aae4;
   position: absolute;
   top: 5px;
   /* left: 50px; */
