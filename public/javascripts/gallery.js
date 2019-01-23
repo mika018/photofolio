@@ -26,8 +26,17 @@ $(".gallery ul li a").click(function() {
 $('#find-me-btn').click(function(){
     $('#upload-input').click();
 })
+
+$('#go-back-arrow').click(function(){
+    while (album_grid.lastChild) {
+        album_grid.removeChild(album_grid.lastChild);
+    }
+    loadAlbum();
+})
+
 // LOADS IMAGES
 var loadAlbum = function(){
+    $('#go-back-arrow').css('visibility', 'hidden');
     var folder_name = getUrlParameter('album_name');
     $.ajax({
         url: '/gallery/open_album',
@@ -43,52 +52,51 @@ var loadAlbum = function(){
                 $('.album_photo').on('click', function() {
                     $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
                     $('#enlargeImageModal').modal('show');
-                });
-                $('#modal-image').imgAreaSelect({
-                    handles: true,
-                    onSelectEnd: function(img, selection){
-                        $('.find-drag-btn').on('click', function(){
-                            console.log(selection)
-                            var y = getImagePortion(img, selection.x2 - selection.x1, selection.y2 - selection.y1, selection.x1, selection.y1, 2);
-                            var blob = dataURItoBlob(y);
-                            var formData = new FormData(document.forms[0]);
-                            var album = getUrlParameter('album_name');
-                            formData.append('album_name', album);
-                            formData.append("uploads[]", blob, "region.jpg");
-                            var album_grid = document.getElementById("album_grid");
-    
-                            while (album_grid.lastChild) {
-                                album_grid.removeChild(album_grid.lastChild);
-                            }
-                            $('#enlargeImageModal').modal('hide');
-                            $('.imgareaselect-outer').css('opacity', '0.0');
-                            $('.lds-roller-container').css('visibility', 'visible');
-                            $.ajax({
-                                url: '/gallery/find_me',
-                                type: 'POST',
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                success: function(data){
-                                    console.log(data);
-                                    for (image of data){
-                                        image_buffer = image.data;
-                                        $('#album_grid').append(loadPhoto(image_buffer))
-                                        $('.album_photo').on('click', function() {
-                                            $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
-                                            $('#enlargeImageModal').modal('show');
-                                        });
-                                    }
-                                    $('.lds-roller-container').css('visibility', 'hidden');
-                                },
-                                error: function(error){
-                                    console.log(error);
-                                    return false;
+                    $('#modal-image').imgAreaSelect({
+                        handles: true,
+                        onSelectEnd: function(img, selection){
+                            $('.find-drag-btn').on('click', function(){
+                                console.log(selection)
+                                var y = getImagePortion(img, selection.x2 - selection.x1, selection.y2 - selection.y1, selection.x1, selection.y1, 2);
+                                var blob = dataURItoBlob(y);
+                                var formData = new FormData(document.forms[0]);
+                                var album = getUrlParameter('album_name');
+                                formData.append('album_name', album);
+                                formData.append("uploads[]", blob, "region.jpg");
+                                var album_grid = document.getElementById("album_grid");
+        
+                                while (album_grid.lastChild) {
+                                    album_grid.removeChild(album_grid.lastChild);
                                 }
-                            });
-                        })
-                    }
+                                $('#enlargeImageModal').modal('hide');
+                                $('.imgareaselect-outer').css('opacity', '0.0');
+                                $('.lds-roller-container').css('visibility', 'visible');
+                                $.ajax({
+                                    url: '/gallery/find_me',
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data){
+                                        console.log(data);
+                                        $('#go-back-arrow').css('visibility', 'visible');
+                                        for (image of data){
+                                            image_buffer = image.data;
+                                            $('#album_grid').append(loadPhoto(image_buffer))
+                                            $('.album_photo').css('cursor', 'default');
+                                        }
+                                        $('.lds-roller-container').css('visibility', 'hidden');
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                        return false;
+                                    }
+                                });
+                            })
+                        }
+                    });
                 });
+
             }
             console.log("SUCCESS!");
         },
@@ -148,10 +156,7 @@ var find_me = function(file){
             for (image of data){
                 image_buffer = image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))
-                $('.album_photo').on('click', function() {
-                    $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
-                    $('#enlargeImageModal').modal('show');
-                });
+                $('.album_photo').css('cursor', 'default');
             }
             $('.lds-roller-container').css('visibility', 'hidden');
         },
