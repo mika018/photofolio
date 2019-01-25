@@ -27,10 +27,7 @@ app.use(session({ cookieName: 'session',
                   saveUninitialized: true,
                   resave: true
                 }));
-app.use(function(req,res,next){
-  console.log(req.session);
-  next();
-})
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

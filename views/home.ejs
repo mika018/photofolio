@@ -29,7 +29,7 @@
             <div class="folder_grid">
                 <% for(var i=0; i < (albums_names).length; i++) { %>
                  
-                    <a class="folder" href=  <%='gallery?album_name=' + (albums_names)[i] %> >
+                    <a class="folder" href=  <%='gallery?album_name=' + (albums_names)[i] + '&user=' + user_name %> >
                         <div class="folder_name" data-album-name= <%= (albums_names)[i] %> >
                              <%= (albums_names)[i] %> 
                         </div>

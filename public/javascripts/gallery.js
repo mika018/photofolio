@@ -38,10 +38,11 @@ $('#go-back-arrow').click(function(){
 var loadAlbum = function(){
     $('#go-back-arrow').css('visibility', 'hidden');
     var folder_name = getUrlParameter('album_name');
+    var user_name = getUrlParameter('user');
     $.ajax({
         url: '/gallery/open_album',
         type: 'POST',
-        data: {album_name:folder_name},
+        data: {album_name:folder_name, user_name: user_name},
         success: function(data){
             // images = data
 
@@ -62,6 +63,7 @@ var loadAlbum = function(){
                                 var formData = new FormData(document.forms[0]);
                                 var album = getUrlParameter('album_name');
                                 formData.append('album_name', album);
+                                formData.append('user_name', user_name);
                                 formData.append("uploads[]", blob, "region.jpg");
                                 var album_grid = document.getElementById("album_grid");
         
@@ -135,9 +137,11 @@ var getImagePortion = function(imgObj, newWidth, newHeight, startX, startY, rati
 var find_me = function(file){
     console.log(JSON.stringify(file))
     var album = getUrlParameter('album_name');
+    var user_name = getUrlParameter('user');
     var formData = new FormData();
     formData.append('uploads[]', file, file.name);
     formData.append('album_name', album);
+    formData.append('user_name', user_name);
     var album_grid = document.getElementById("album_grid");
 
     while (album_grid.lastChild) {

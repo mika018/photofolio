@@ -36,8 +36,9 @@ router.get('/', function(req, res, next){
 
 router.post('/open_album', function(req, res, next) {
   var album_name = req.body.album_name;
- 
-  model.getImagesByEvent(album_name)
+  var user_name = req.body.user_name;
+  console.log(album_name + user_name)
+  model.getImagesByEvent(user_name, album_name)
     .then(images => {
       image_list = []
       images.forEach((image, i) => {
@@ -65,21 +66,24 @@ router.post('/find_me', function(req, res, next) {
     var file = fs.readFileSync(file_path);
     var face_metadata = {
       filename : files['uploads[]']['name'],
+      user_name : 'faces',
       content_type : files['uploads[]']['type'],
-      eventt : 'faces'
+      eventt : 'faces',
+      user_eventt : 'faces/faces'
     }
+    var user_name = fields['user_name'];
     var album_name = fields['album_name'];
     // console.log(`Album name: ${album_name}`)
     // First upload the provided image to the faces directory inside s3 bucket
     model.uploadImage(file, face_metadata).then(() => {
       // Then pull all the images from the viewed event/album
-      model.getImagesByEvent(album_name)
+      model.getImagesByEvent(req.session.user, album_name)
            .then(images => {
                   // Now run rekognition api against all those photos
                   var face_matching_images = [];
-                  var itemsProcessed = 1;
+                  var itemsProcessed = 0;
                   images.forEach((image) => {
-                    const params = rekognitionParams(image.metadata[0].s3_uri, `faces/${face_metadata.filename}`)
+                    const params = rekognitionParams(image.metadata[0].s3_uri, `faces/faces/${face_metadata.filename}`)
                     console.log(`Rekognition params: ${JSON.stringify(params)}`)
                     rekognition.compareFaces(params, function(err, data) {
                       if (err) {

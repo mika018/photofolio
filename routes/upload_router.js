@@ -10,7 +10,12 @@ const fs = require('fs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('upload');
+  if(req.session.user){
+    res.render('upload');
+  }
+  else{
+    res.redirect('/login');
+  }
 });
 
 router.post('/upload_request',   function(req, res, next) {
@@ -20,19 +25,19 @@ router.post('/upload_request',   function(req, res, next) {
     console.log(files)
     console.log(fields)
     var oldpath = files['uploads[]']['path'];
-
+    console.log(req.session.user);
     var file = fs.readFileSync(oldpath);
     var content_type =  files['uploads[]']['type'].substr(files['uploads[]']['type'].lastIndexOf('/') + 1);
     var metadata = {
       filename : files['uploads[]']['name'],
       content_type : content_type,
-      eventt : fields['album_name']
+      eventt : fields['album_name'],
+      user_name : req.session.user
     }
     console.log(metadata)
 
-
     // model.uploadImage(file, metadata)
-    model.addEvent(metadata.eventt)
+    model.addEvent( metadata.user_name, metadata.eventt)
     .then(() => {
       model.uploadImage(file, metadata)
       .then(data => console.log(data))
@@ -44,16 +49,4 @@ router.post('/upload_request',   function(req, res, next) {
   });
 });
 
-// var upload = multer({
-//   storage: s3({
-//       dirname: '/',
-//       bucket: 'bucket-name',
-//       secretAccessKey: 'TFnLnZlUzqcUupBnDqnNLY6Mjf5IFGMSE3khDJgs',
-//       accessKeyId: 'AKIAIKZDBQWF7HPPD4TQ',
-//       region: 'us-east-1',
-//       filename: function (req, file, cb) {
-//           cb(null, file.originalname); //use Date.now() for unique file keys
-//       }
-//   })
-// });
 module.exports = router;

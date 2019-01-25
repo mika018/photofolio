@@ -9,13 +9,16 @@ var model = require('../models/model');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.session.user){
-    model.getEvents()
+
+    model.getEvents(req.session.user)
       .then(events => {
-        console.log(events);
+        console.log("EVENTS:" + events);
         album_names = events.map(event => event.slice(0, -1))
         res.render('home', ({
-          albums_names: album_names
-        }))}
+            albums_names: album_names,
+            user_name: req.session.user
+          }))
+        }
       )
       .catch(err => console.log("err: " + err))
   }

@@ -31,11 +31,12 @@ var submitLogin = function(){
 
 
 var submitAlbumID = function(){
- 
+    var user_name = $('#user_id').val();
     var album_name = $('#album_id').val();
-    var album_url = 'gallery?album_name=' + album_name;
+    
+    var album_url = 'gallery?album_name=' + album_name + "&user=" + user_name;
     window.location.href = album_url;
-  
+    console.log(album_url)
 }
 
 var flashPasswordField = function(){
