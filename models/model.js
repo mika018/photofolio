@@ -152,7 +152,7 @@ Model.getImagesByEvent = function(user_name, eventt){
                 filename: image_record.filename.S,
                 user_name: image_record.user_name.S
             }
-            console.log("RECORD: " + record)
+        
             return record;
         })
         getImagesP = image_records.map(image_record => Model.getImageByKey(image_record))

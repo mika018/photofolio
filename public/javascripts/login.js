@@ -36,7 +36,7 @@ var submitAlbumID = function(){
     
     var album_url = 'gallery?album_name=' + album_name + "&user=" + user_name;
     window.location.href = album_url;
-    console.log(album_url)
+
 }
 
 var flashPasswordField = function(){
