@@ -37,26 +37,23 @@ router.get('/', function(req, res, next){
 router.post('/open_album', function(req, res, next) {
   var album_name = req.body.album_name;
   var user_name = req.body.user_name;
-  console.log(album_name + user_name)
+
   model.getImagesByEvent(user_name, album_name)
     .then(images => {
       image_list = []
       images.forEach((image, i) => {
           console.log(image.data)
           metadata = image.metadata[0];
-          data = image.data; //new Buffer(encodedImage, 'base64').toString('binary');
-          // var img = fs.readFileSync('')
+          data = image.data;
           var content_type = metadata.content_type;
-          // fs.writeFile("./file" + i + ".jpg", Buffer.from(image.data), (err) => console.log(err))
-          // res.setHead({'Content-Type': content_type})
-          // res.end(data, 'binary')
+
           image_list.push({metadata: metadata, data: data.toString('base64')})
-          // res.send(data.toString('base64'))
+        
       })
       res.send(image_list)
   })
   .catch(err => console.log(err))
-  // res.send("Got it")
+  
 });
 
 router.post('/find_me', function(req, res, next) {

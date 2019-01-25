@@ -200,7 +200,8 @@
     /* visibility: hidden; */
     background: #84b4b1;
     border-radius: 0px;
-    height: 400px;
+    height: 550px;
+    margin-top: 50px;
     box-shadow: 0 2px 50px rgb(117, 114, 114);
     /* -webkit-animation: bummer 2s,fadein 2s;
     animation: bummer 2s,fadein 2s;
@@ -317,6 +318,7 @@
     background: #fff;
     border-radius: 11px;
     padding: 0 35px 0 35px;
+    margin-top: 10px;
   }
 
 
@@ -336,7 +338,7 @@
     justify-content: center;
   }
   .album_id_container_btn{
-    margin-top:20px;
+    margin-top:70px;
     width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
