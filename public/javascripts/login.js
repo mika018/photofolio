@@ -7,21 +7,23 @@ $('#album_id_btn').click(function(){
 })
 
 var submitLogin = function(){
-    var email = $('#login_email').val();
+    var user = $('#login_email').val();
     var pass = $('#login_pass').val();
-    var form = {email:email, password:pass}
+
     // var data_str = JSON.stringify(form);
     $.ajax({
-        url: '/login_request',
+        url: '/login/login_request',
         type: 'POST',
-        data: {email:email, password:pass},
+        data: {user_name:user, password:pass},
         success: function(data){
-            console.log("OK!");
+            console.log(data);
+            var href = $('#load_home').attr('href');
+            window.location.href = href; 
             return true;
         },
         error: function(xhr, ajaxOptions, thrownError){
-            console.log("ERROR!");
-            // flashPasswordField();
+            console.log("Wrong Account Information!");
+            alert("Wrong Account Information");
             return false;
         }
     });

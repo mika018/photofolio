@@ -1,17 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-
+var model = require('../models/model');
 var Users = require('../models/users');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('login');
 });
+
 router.post('/login_request', function(req, res, next) {
-  Users.loginRequest(req, res);
-  res.send("Received login request");
+  model.verifyUser(req, res);
 });
+
 router.post('/album_id_request', function(req, res, next) {
   var album_name = req.body.album_name;
  

@@ -15,10 +15,13 @@
 	<title>Photofolio</title>
 </head>
 <header>
-	<ul class="tabs">
-			<li class="tab-link" data-tab="home-tab">Home<a class="tab-url" href="/home"></a></li>
-			<li class="tab-link" data-tab="upload-tab">Upload<a class="tab-url" href="/upload"></a></li>
-	</ul>
+	<% if (logged_in) { %>	
+		<ul class="tabs">
+				<li class="tab-link" data-tab="home-tab">Home<a class="tab-url" href="/"></a></li>
+				<li class="tab-link" data-tab="upload-tab">Upload<a class="tab-url" href="/upload"></a></li>
+		</ul>
+	<% } %>
+
 	<h1>Photofolio</h1>
 	<h2></h2>
 	<button class="btn btn-lg find-btn" type="button" id="find-me-btn">Find Me By Uploading A Face</button>

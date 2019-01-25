@@ -22,7 +22,8 @@ Model.AWS = AWS
 Model.CONFIG = {	
     "s3_image_bucket": "photofolio-dev-s3-bucket-2",
     "ddb_image_table": "dev-images",
-    "ddb_event_table": "dev-events"
+    "ddb_event_table": "dev-events",
+    "ddb_user_table" : "dev-users"
 } //JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 
 // Returns a promise that returns all events
@@ -46,6 +47,34 @@ Model.addEvent = function(eventt) {
             eventt: { S: eventt + "/" }
         }
     }).promise()
+}
+
+Model.verifyUser = function(req, res){
+    user_name = req.body.user_name;
+    password = req.body.password;
+
+    ddb.query({
+                TableName: Model.CONFIG.ddb_user_table,
+                KeyConditionExpression: 'user_name = :user_name',
+                ProjectionExpression: 'user_name, password',
+                ExpressionAttributeValues: {
+                    ':user_name': { 'S': user_name }
+            
+                }
+    }).promise().then(records => {  console.log(records);
+                                    if (((records.Items).length > 0 ) ) {
+                                        req.session.user = req.body.user_name;
+                                        res.status(200).send({ 
+                                            message: "Successful login"
+                                            });
+                                    } 
+                                    else {
+                                        res.status(400).send({
+                                            message: 'Email Or Password Incorrect'
+                                        });
+                                    }})
+
+    
 }
 
 // Returns promise that returns an image and its metadata

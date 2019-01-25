@@ -28,7 +28,10 @@ function rekognitionParams(sourceImage, targetImage) {
 
 router.get('/', function(req, res, next){
 //   var album_name = req.query.album_name;
-  res.render('gallery');
+  if(req.session.user) 
+    res.render('gallery', ({logged_in: true}));
+  else 
+    res.render('gallery', ({logged_in: false}));
 })
 
 router.post('/open_album', function(req, res, next) {
