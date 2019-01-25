@@ -12,7 +12,7 @@ var submitLogin = function(){
     var form = {email:email, password:pass}
     // var data_str = JSON.stringify(form);
     $.ajax({
-        url: '/login/login_request',
+        url: '/login_request',
         type: 'POST',
         data: {email:email, password:pass},
         success: function(data){
@@ -29,23 +29,11 @@ var submitLogin = function(){
 
 
 var submitAlbumID = function(){
-    var album_id = $('#album_id').val();
-    var form = {album_id:album_id}
-    // var data_str = JSON.stringify(form);
-    $.ajax({
-        url: '/login/album_id_request',
-        type: 'POST',
-        data: {album_id:album_id},
-        success: function(data){
-            console.log("OK!");
-            return true;
-        },
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log("ERROR!");
-            // flashPasswordField();
-            return false;
-        }
-    });
+ 
+    var album_name = $('#album_id').val();
+    var album_url = 'gallery?album_name=' + album_name;
+    window.location.href = album_url;
+  
 }
 
 var flashPasswordField = function(){
