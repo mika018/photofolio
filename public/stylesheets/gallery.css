@@ -279,8 +279,28 @@
  .cent{
   text-align:center;
  }
+ 
+ .modal-content{
+  min-width: 300px;
+  min-height: 300px;
+ }
  .modal-body{
    margin: 50px;
+   min-width: 300px;
+   min-height: 300px;
+   overflow-y: auto;
+
+ }
+ #modal-image{
+   position: relative;
+   left:0; 
+   right:0;
+   top:0; 
+   bottom:0;
+   margin-left: auto;
+   margin-right: auto;
+   height: 50%;
+   width: 50%;
  }
  .find-drag-btn{
    background: rgb(154, 154, 230);

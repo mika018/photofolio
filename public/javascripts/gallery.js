@@ -28,10 +28,7 @@ $('#find-me-btn').click(function(){
 })
 
 $('#go-back-arrow').click(function(){
-    while (album_grid.lastChild) {
-        album_grid.removeChild(album_grid.lastChild);
-    }
-    loadAlbum();
+    window.location.href = window.location.href ;
 })
 
 // LOADS IMAGES
@@ -111,7 +108,7 @@ var loadAlbum = function(){
     $('body').css('display', 'none');
     $('body').fadeIn(2000);
     $('header').find('h2').text(folder_name);
-    
+
 }
 
 var getImagePortion = function(imgObj, newWidth, newHeight, startX, startY, ratio){
@@ -163,6 +160,8 @@ var find_me = function(file){
                 $('.album_photo').css('cursor', 'default');
             }
             $('.lds-roller-container').css('visibility', 'hidden');
+            $('#find-me-btn').css('visibility', 'hidden');
+            $('#go-back-arrow').css('visibility', 'visible');
         },
         error: function(error){
             console.log(error);
