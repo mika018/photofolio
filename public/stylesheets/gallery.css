@@ -300,6 +300,7 @@
    margin-left: auto;
    margin-right: auto;
    height: 50%;
+   max-height: 600px;
    width: 50%;
  }
  .find-drag-btn{
@@ -413,7 +414,9 @@
   flex-flow: row wrap;
   justify-content: center;
   align-content: center;
+  height: 50px;
   align-items: center;
+  top: -30px;
 }
 #arrows li {
   position: relative;

@@ -36,15 +36,22 @@ var loadAlbum = function(){
     $('#go-back-arrow').css('visibility', 'hidden');
     var folder_name = getUrlParameter('album_name');
     var user_name = getUrlParameter('user');
+    $('.lds-roller-container').css('visibility', 'visible');
+    var i = 0
     $.ajax({
         url: '/gallery/open_album',
         type: 'POST',
         data: {album_name:folder_name, user_name: user_name},
         success: function(data){
             // images = data
-
+        
             // document.getElementById('test_canvas').src = 'data:image/jpg;base64,' + images[0].data;
             for (image of data){
+                i = i + 1;
+                  
+                if (i >= data.length){
+                    $('.lds-roller-container').css('visibility', 'hidden');
+                }
                 image_buffer = image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))
                 $('.album_photo').on('click', function() {
