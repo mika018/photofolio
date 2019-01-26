@@ -152,6 +152,7 @@ h1.home_title{
   height: 140px;
   
   margin-left: 50px;
+  margin-bottom: 40px;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -167,6 +168,7 @@ h1.home_title{
   background-color: #75a9dd;
   box-shadow: 2px 2px 1px 1px rgb(61, 59, 59);
   position: absolute;
+  bottom: -15px;
   /* top: 15px; */
   /* left: 50px;     */
 }
@@ -180,7 +182,7 @@ h1.home_title{
   box-shadow: 2px 2px 1px 1px rgb(37, 33, 33);
   background-color: #71aae4;
   position: absolute;
-  top: 5px;
+
   /* left: 50px; */
 }
 
@@ -189,8 +191,10 @@ h1.home_title{
 }
 
 .folder_name{
+  overflow-wrap:break-word;
   z-index: 1000;
   top:40%;
+  height: 50px;
   position: relative;
   font: 1em/1.5 'Open Sans', sans-serif;
   color: var(--clrTitle);

@@ -5,7 +5,6 @@ $('.tab-link').on('click', function(){
     window.location.href = tab_url;
 })
 
-
 $('.upload-btn').on('click', function (){
     console.log("CLICK");
     var files = $('#upload-input').get(0).files;
@@ -33,6 +32,8 @@ function postFilesTo(files, album, url) {
         var formData = new FormData();
         formData.append('album_name', $('#album_name_input').val())
         // loop through all the selected files and add them to the formData object
+        $('.lds-roller-container').css('visibility', 'visible');
+        p = 0;
         for (var i = 0; i < files.length; i++) {
 
             // add the files to formData object for the data payload
@@ -49,6 +50,10 @@ function postFilesTo(files, album, url) {
                 contentType: false,
                 success: function(data){
                     console.log('upload successful!\n' + data);
+                    p = p + 1;
+                    if(p >= files.length){
+                        $('.lds-roller-container').css('visibility', 'hidden');
+                    }
                 }
             });
         }
