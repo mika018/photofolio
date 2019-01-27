@@ -285,7 +285,7 @@
   min-height: 300px;
  }
  .modal-body{
-   margin: 50px;
+   margin-bottom: 50px;
    min-width: 300px;
    min-height: 300px;
    overflow-y: auto;
