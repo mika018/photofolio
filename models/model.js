@@ -123,7 +123,7 @@ Model.getImageByKey = function(image_metadata){
                 eventt: image_record.eventt.S
             }
         })
-    })
+    }) 
 
     return Promise.all([fetchImageP, fetchImageMetadataP])
     .then(([image_data, image_metadata]) => {
