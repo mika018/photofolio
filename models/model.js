@@ -181,6 +181,7 @@ Model.uploadImage = function(image_data, image_metadata){
             eventt: { S: image_metadata.eventt },
             filename: { S: image_metadata.filename },
             content_type: { S: image_metadata.content_type },
+            user: { S: image_metadata.username }
         }
     }).promise()
 
@@ -253,7 +254,8 @@ Model.updateImageMetaData = function(old_image_metadata, new_image_metadata){
                 user_name : {"S" : new_image_metadata.user_name },
                 eventt: { "S": new_image_metadata.eventt },
                 filename: { "S": new_image_metadata.filename },
-                content_type: { "S": new_image_metadata.content_type }
+                content_type: { "S": new_image_metadata.content_type },
+                username: { "S": new_image_metadata.username }
             }
         }).promise()
     })
