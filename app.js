@@ -11,7 +11,6 @@ var upload_router = require('./routes/upload_router');
 var login_router = require('./routes/login_router');
 var gallery_router = require('./routes/gallery_router');
 // var client  = redis.createClient();
-var cors = require('cors');
 
 var app = express();
 
