@@ -11,6 +11,16 @@ $('.upload-btn').on('click', function (){
     postFilesTo(files, '', '/upload/upload_request');
 });
 
+$("#album_name_input").on({
+    keydown: function(e) {
+      if (e.which === 32)
+        return false;
+    },
+    change: function() {
+      this.value = this.value.replace(/\s/g, "");
+    }
+});
+
 function readURL(files) {
     if (files[0]) {
         var reader = new FileReader();

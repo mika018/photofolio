@@ -31,6 +31,7 @@ $('#go-back-arrow').click(function(){
     window.location.href = window.location.href ;
 })
 
+
 // LOADS IMAGES
 var loadAlbum = function(){
     $('#go-back-arrow').css('visibility', 'hidden');
