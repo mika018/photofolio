@@ -44,7 +44,7 @@ var loadAlbum = function(){
         data: {album_name:folder_name, user_name: user_name},
         success: function(data){
             // images = data
-        
+            console.log(data)
             // document.getElementById('test_canvas').src = 'data:image/jpg;base64,' + images[0].data;
             for (image of data){
                 i = i + 1;
@@ -52,58 +52,12 @@ var loadAlbum = function(){
                 if (i >= data.length){
                     $('.lds-roller-container').css('visibility', 'hidden');
                 }
-                image_buffer = image.data;
+                image_buffer = image; //image.data;
                 $('#album_grid').append(loadPhoto(image_buffer))
-                $('.album_photo').on('click', function() {
-                    $('.enlargeImageModalSource').attr('src', $(this).attr('src'));
-                    $('#enlargeImageModal').modal('show');
-                    $('#modal-image').imgAreaSelect({
-                        handles: true,
-                        onSelectEnd: function(img, selection){
-                            $('.find-drag-btn').on('click', function(){
-                                console.log(selection)
-                                var y = getImagePortion(img, selection.x2 - selection.x1, selection.y2 - selection.y1, selection.x1, selection.y1, 2);
-                                var blob = dataURItoBlob(y);
-                                var formData = new FormData(document.forms[0]);
-                                var album = getUrlParameter('album_name');
-                                formData.append('album_name', album);
-                                formData.append('user_name', user_name);
-                                formData.append("uploads[]", blob, "region.jpg");
-                                var album_grid = document.getElementById("album_grid");
-        
-                                while (album_grid.lastChild) {
-                                    album_grid.removeChild(album_grid.lastChild);
-                                }
-                                $('#enlargeImageModal').modal('hide');
-                                $('.imgareaselect-outer').css('opacity', '0.0');
-                                $('.lds-roller-container').css('visibility', 'visible');
-                                $.ajax({
-                                    url: '/gallery/find_me',
-                                    type: 'POST',
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function(data){
-                                        console.log(data);
-                                        $('#go-back-arrow').css('visibility', 'visible');
-                                        for (image of data){
-                                            image_buffer = image.data;
-                                            $('#album_grid').append(loadPhoto(image_buffer))
-                                            $('.album_photo').css('cursor', 'default');
-                                        }
-                                        $('.lds-roller-container').css('visibility', 'hidden');
-                                    },
-                                    error: function(error){
-                                        console.log(error);
-                                        return false;
-                                    }
-                                });
-                            })
-                        }
-                    });
-                });
-
             }
+            $('.album_photo').on('click', function() {
+                clickPhoto(this)
+            });
             console.log("SUCCESS!");
         },
         error: function(error){
@@ -118,9 +72,79 @@ var loadAlbum = function(){
 
 }
 
+var clickPhoto = function(photo){
+    src = $(photo).attr('src');
+    
+    s3_uri = src.substr("http://d2i92g32k4t6rw.cloudfront.net/".length)
+    console.log(s3_uri)
+    $.ajax({
+        url: '/gallery/image_data',
+        type: 'POST',
+        data: {s3_uri : s3_uri},
+        success: function(data){
+            buffer_src =  "data:image/jpg;base64," + data;
+            $('.enlargeImageModalSource').attr('src', buffer_src);
+            $('#enlargeImageModal').modal('show');
+            $('#modal-image').imgAreaSelect({
+                handles: true,
+                onSelectEnd: function(img, selection){
+                    $('.find-drag-btn').on('click', function(){
+                        console.log(selection)
+                        var y = getImagePortion(img, selection.x2 - selection.x1, selection.y2 - selection.y1, selection.x1, selection.y1, 2);
+                        var blob = dataURItoBlob(y);
+                        var formData = new FormData();
+                        var album = getUrlParameter('album_name');
+                        var user_name = getUrlParameter('user');
+                        formData.append('album_name', album);
+                        formData.append('user_name', user_name);
+                        formData.append("uploads[]", blob, "region.jpg");
+                        var album_grid = document.getElementById("album_grid");
+
+                        while (album_grid.lastChild) {
+                            album_grid.removeChild(album_grid.lastChild);
+                        }
+                        $('#enlargeImageModal').modal('hide');
+                        $('.imgareaselect-outer').css('opacity', '0.0');
+                        $('.lds-roller-container').css('visibility', 'visible');
+                        $.ajax({
+                            url: '/gallery/find_me',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(data){
+                                console.log(data);
+                                $('#go-back-arrow').css('visibility', 'visible');
+                                for (s3_uri of data){
+                                  
+                                    $('#album_grid').append(loadPhoto(s3_uri))
+                                    $('.album_photo').css('cursor', 'default');
+                                }
+                                $('.lds-roller-container').css('visibility', 'hidden');
+                            },
+                            error: function(error){
+                                console.log(error);
+                                return false;
+                            }
+                        });
+                    })
+                }
+            });
+        },
+        error: function(error){
+            console.log(error);
+            return false;
+        }
+    });
+}
+
 var getImagePortion = function(imgObj, newWidth, newHeight, startX, startY, ratio){
     /* the parameters: - the image element - the new width - the new height - the x point we start taking pixels - the y point we start taking pixels - the ratio */
     //set up canvas for thumbnail
+
+
+
+
     var tnCanvas = document.createElement('canvas');
     var tnCanvasContext = tnCanvas.getContext('2d');
     tnCanvas.width = newWidth; tnCanvas.height = newHeight;
@@ -161,9 +185,9 @@ var find_me = function(file){
         success: function(data){
             console.log('finding successful!\n');
 
-            for (image of data){
-                image_buffer = image.data;
-                $('#album_grid').append(loadPhoto(image_buffer))
+            for (s3_uri of data){
+                
+                $('#album_grid').append(loadPhoto(s3_uri))
                 $('.album_photo').css('cursor', 'default');
             }
             $('.lds-roller-container').css('visibility', 'hidden');
@@ -212,7 +236,7 @@ function dataURItoBlob(dataURI) {
 var loadPhoto = function(image_buffer){
     return   ( '<li>'
                 + '<a class="image" >' 
-                + '<img class="album_photo" src="data:image/jpg;base64,' + image_buffer + '" alt="">'
+                + '<img class="album_photo" src="http://d2i92g32k4t6rw.cloudfront.net/' + image_buffer + '" alt="">'
                 + '</a>'
                 + '</li>')
 }

@@ -134,6 +134,17 @@ Model.getImageByKey = function(image_metadata){
     })
 }
 
+Model.getImageByS3URI = function(s3_uri){
+    console.log("S3 URI: " + s3_uri)
+    return s3.getObject({
+        Bucket: Model.CONFIG.s3_image_bucket,
+        Key: s3_uri
+    }).promise().then(data => {
+        return data.Body
+    })
+
+    // return Promise.all(fetchImageP)
+}
 // Returns a promise that returns all images (and assosiated metadata) for a given event
 // output = [image]
 Model.getImagesByEvent = function(user_name, eventt){
@@ -157,6 +168,48 @@ Model.getImagesByEvent = function(user_name, eventt){
         })
         getImagesP = image_records.map(image_record => Model.getImageByKey(image_record))
         return Promise.all(getImagesP)
+    })
+}
+
+Model.getImageCloudFrontURLsByEvent = function(user_name, eventt){
+    return ddb.query({
+        TableName: Model.CONFIG.ddb_image_table,
+        KeyConditionExpression: 'user_eventt = :user_eventt',
+        ProjectionExpression: "user_eventt, eventt, filename, user_name",
+        ExpressionAttributeValues: {
+            ':user_eventt': { 'S': user_name + "/" + eventt }
+        }
+    }).promise().then(image_records => {
+        image_records = image_records.Items.map(image_record => {
+ 
+            var record = {
+                eventt: image_record.eventt.S,
+                filename: image_record.filename.S,
+                user_name: image_record.user_name.S
+            }
+        
+            return record;
+        })
+        getImagesP = image_records.map(image_record =>  `${image_record.user_name}/${image_record.eventt}/${image_record.filename}`)
+        return Promise.all(getImagesP)
+    })
+}
+
+
+Model.getImageS3URIsByEvent = function(user_name, eventt){
+    return ddb.query({
+        TableName: Model.CONFIG.ddb_image_table,
+        KeyConditionExpression: 'user_eventt = :user_eventt',
+        ProjectionExpression: "user_eventt, eventt, s3_uri",
+        ExpressionAttributeValues: {
+            ':user_eventt': { 'S': user_name + "/" + eventt }
+        }
+    }).promise().then(image_records => {
+        s3_uris = image_records.Items.map(image_record => {
+            return image_record.s3_uri.S;
+        })
+        
+        return Promise.all(s3_uris)
     })
 }
 
