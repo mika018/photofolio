@@ -134,6 +134,17 @@ Model.getImageByKey = function(image_metadata){
     })
 }
 
+Model.getImageByS3URI = function(s3_uri){
+    console.log("S3 URI: " + s3_uri)
+    return s3.getObject({
+        Bucket: Model.CONFIG.s3_image_bucket,
+        Key: s3_uri
+    }).promise().then(data => {
+        return data.Body
+    })
+
+    // return Promise.all(fetchImageP)
+}
 // Returns a promise that returns all images (and assosiated metadata) for a given event
 // output = [image]
 Model.getImagesByEvent = function(user_name, eventt){
@@ -160,6 +171,48 @@ Model.getImagesByEvent = function(user_name, eventt){
     })
 }
 
+Model.getImageCloudFrontURLsByEvent = function(user_name, eventt){
+    return ddb.query({
+        TableName: Model.CONFIG.ddb_image_table,
+        KeyConditionExpression: 'user_eventt = :user_eventt',
+        ProjectionExpression: "user_eventt, eventt, filename, user_name",
+        ExpressionAttributeValues: {
+            ':user_eventt': { 'S': user_name + "/" + eventt }
+        }
+    }).promise().then(image_records => {
+        image_records = image_records.Items.map(image_record => {
+ 
+            var record = {
+                eventt: image_record.eventt.S,
+                filename: image_record.filename.S,
+                user_name: image_record.user_name.S
+            }
+        
+            return record;
+        })
+        getImagesP = image_records.map(image_record =>  `${image_record.user_name}/${image_record.eventt}/${image_record.filename}`)
+        return Promise.all(getImagesP)
+    })
+}
+
+
+Model.getImageS3URIsByEvent = function(user_name, eventt){
+    return ddb.query({
+        TableName: Model.CONFIG.ddb_image_table,
+        KeyConditionExpression: 'user_eventt = :user_eventt',
+        ProjectionExpression: "user_eventt, eventt, s3_uri",
+        ExpressionAttributeValues: {
+            ':user_eventt': { 'S': user_name + "/" + eventt }
+        }
+    }).promise().then(image_records => {
+        s3_uris = image_records.Items.map(image_record => {
+            return image_record.s3_uri.S;
+        })
+        
+        return Promise.all(s3_uris)
+    })
+}
+
 // Returns a promise that uploads an image to s3 and create a DynamoDB metadata record
 // output = undefined
 Model.uploadImage = function(image_data, image_metadata){
@@ -180,8 +233,7 @@ Model.uploadImage = function(image_data, image_metadata){
             user_name: {S: image_metadata.user_name},
             eventt: { S: image_metadata.eventt },
             filename: { S: image_metadata.filename },
-            content_type: { S: image_metadata.content_type },
-            user: { S: image_metadata.username }
+            content_type: { S: image_metadata.content_type }
         }
     }).promise()
 
@@ -254,8 +306,7 @@ Model.updateImageMetaData = function(old_image_metadata, new_image_metadata){
                 user_name : {"S" : new_image_metadata.user_name },
                 eventt: { "S": new_image_metadata.eventt },
                 filename: { "S": new_image_metadata.filename },
-                content_type: { "S": new_image_metadata.content_type },
-                username: { "S": new_image_metadata.username }
+                content_type: { "S": new_image_metadata.content_type }
             }
         }).promise()
     })

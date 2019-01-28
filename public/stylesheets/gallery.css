@@ -282,14 +282,16 @@
  
  .modal-content{
   min-width: 300px;
-  min-height: 300px;
+  min-height: 400px;
+  max-height: 600px;
+
  }
  .modal-body{
-   margin-bottom: 50px;
    min-width: 300px;
-   min-height: 300px;
-   overflow-y: auto;
 
+   min-height: 350px;
+   overflow:hidden;
+   background: white;
  }
  #modal-image{
    position: relative;
@@ -300,13 +302,18 @@
    margin-left: auto;
    margin-right: auto;
    height: 50%;
-   max-height: 600px;
    width: 50%;
+
+ }
+ .find-drag-btn-container{
+   position:relative;
+   background: white;
+   padding-bottom: 10px;
  }
  .find-drag-btn{
    background: rgb(154, 154, 230);
    position:relative;
-   top: -50px;
+   /* top: -50px; */
  }
  .find-btn{
    position:relative;
